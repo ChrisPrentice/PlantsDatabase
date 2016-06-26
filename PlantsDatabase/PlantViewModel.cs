@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 using PlantDatabaseRepositories;
 using PlantsDatabase.IRIS.Law.SharedWpf;
@@ -26,10 +26,11 @@ namespace PlantsDatabase
                 _plants = new ObservableCollection<Plant>(_plantRepo.GetPlants());
                 OnPropertyChanged("Plants");
             });
+
             GoogleCommand = new DelegateCommand<Plant>(p =>
             {
-                string googleLink = ImageSearchUriCreator.CreateString(p.PlantTypeLatinName, p.PlantName);
-                System.Diagnostics.Process.Start(googleLink);
+                string googleLink = ImageSearchUriCreator.Create(p.PlantTypeLatinName, p.PlantName);
+                Process.Start(googleLink);
             });
         }
 
