@@ -11,7 +11,27 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding SiteHeader}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Margin" Value="15,0"/>
+                    <Setter Property="Width" Value="120"/>
+                    <Setter Property="Source" Value="WhiteLily.jpg"/>
+                </Style>
+            </Grid.Resources>
+            <Image RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <ScaleTransform ScaleX="-1"/>
+                </Image.RenderTransform>
+            </Image>
+            <TextBlock Grid.Column="1" Text="{Binding SiteHeader}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" />
+            <Image Grid.Column="2"/>
+        </Grid>
         <Grid Grid.Row="1" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
