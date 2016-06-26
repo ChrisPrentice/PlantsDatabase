@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using PlantDatabaseRepositories;
@@ -25,9 +26,15 @@ namespace PlantsDatabase
                 _plants = new ObservableCollection<Plant>(_plantRepo.GetPlants());
                 OnPropertyChanged("Plants");
             });
+            GoogleCommand = new DelegateCommand<Plant>(p =>
+            {
+                string googleLink = ImageSearchUriCreator.CreateString(p.PlantTypeLatinName, p.PlantName);
+                System.Diagnostics.Process.Start(googleLink);
+            });
         }
 
         public ICommand AddPlantCommand { get; set; }
+        public ICommand GoogleCommand { get; set; }
         public string SiteHeader => "Plants Database";
 
         public string PlantName

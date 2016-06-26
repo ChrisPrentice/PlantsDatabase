@@ -17,10 +17,12 @@ namespace PlantDatabaseRepositories
 
                 return connection.Query<Plant>(@"
                         SELECT                         
-                            p.PlantId, p.PlantName, p.PlantTypeId, pt.PlantTypeLatinName
+                            p.PlantId, p.PlantName, p.PlantTypeId, pt.PlantTypeLatinName, 
+                            pt.PlantTypeCommonName, pf.PlantFamilyName, pf.PlantFamilyId
                         FROM Plants p 
                         INNER JOIN PlantTypes pt ON p.PlantTypeId = pt.PlantTypeId
-                        ORDER BY pt.PlantTypeLatinName, p.PlantName
+                        INNER JOIN PlantFamily pf ON pt.PlantFamilyId = pf.PlantFamilyId
+                        ORDER BY pf.PlantFamilyName, pt.PlantTypeLatinName, p.PlantName
                         ");
             }
         }

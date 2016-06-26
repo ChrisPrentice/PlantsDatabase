@@ -8,59 +8,99 @@
         Title="MainWindow" Height="760" Width="1024">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="{Binding SiteHeader}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50"/>
+        <TextBlock Text="{Binding SiteHeader}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="50" />
         <Grid Grid.Row="1" Margin="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.Resources>
                 <Style TargetType="TextBox">
-                    <Setter Property="Height" Value="23"/>
-                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Height" Value="23" />
+                    <Setter Property="Margin" Value="4" />
                 </Style>
                 <Style TargetType="TextBlock">
-                    <Setter Property="Height" Value="23"/>
-                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Height" Value="23" />
+                    <Setter Property="Margin" Value="4" />
                 </Style>
                 <Style TargetType="Button">
-                    <Setter Property="Height" Value="23"/>
-                    <Setter Property="Margin" Value="4"/>
-                    <Setter Property="Width" Value="100"/>
+                    <Setter Property="Height" Value="23" />
+                    <Setter Property="Margin" Value="4" />
+                    <Setter Property="Width" Value="100" />
                 </Style>
                 <Style TargetType="DataGrid">
-                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Margin" Value="4" />
                 </Style>
                 <Style TargetType="local:AutoFilteredComboBox">
-                    <Setter Property="Height" Value="23"/>
-                    <Setter Property="Margin" Value="4"/>
+                    <Setter Property="Height" Value="23" />
+                    <Setter Property="Margin" Value="4" />
                 </Style>
             </Grid.Resources>
-            <TextBlock Text="Plant Name"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlantName}"/>
+            <TextBlock Text="Plant Name" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlantName}" />
 
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="Plant Type"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Plant Type" />
             <local:AutoFilteredComboBox Grid.Row="1" Grid.Column="1"
                                         ItemsSource="{Binding PlantTypes}"
                                         SelectedValue="{Binding SelectedPlantTypeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         DisplayMemberPath="PlantTypeLatinName"
-                                        SelectedValuePath="PlantTypeId"/>
-            
-            <Button Grid.Row="2" Grid.Column="1" Command="{Binding AddPlantCommand}" Content="Add Plant" HorizontalAlignment="Right"/>
-            
-            <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" 
-                      AutoGenerateColumns="True" GridLinesVisibility="None" VerticalScrollBarVisibility="Auto"
-                        CanUserSortColumns="True" AlternatingRowBackground="#E8FCFF" Background="#f2f2f2" HeadersVisibility="Column"
-                        ItemsSource="{Binding Plants}"/>
+                                        SelectedValuePath="PlantTypeId" />
+
+            <Button Grid.Row="2" Grid.Column="1" Command="{Binding AddPlantCommand}" Content="Add Plant"
+                    HorizontalAlignment="Right" />
+
+            <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0"
+                      AutoGenerateColumns="False" GridLinesVisibility="None" VerticalScrollBarVisibility="Auto"
+                      CanUserSortColumns="True" AlternatingRowBackground="#E8FCFF" Background="#f2f2f2"
+                      HeadersVisibility="Column"
+                      ItemsSource="{Binding Plants}">
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#ffffe1" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                        </Style.Resources>
+                    </Style>
+                    <DataTemplate x:Key="PlantFamilyName">
+                        <TextBlock Margin="2,0" VerticalAlignment="Center" Text="{Binding PlantFamilyName}"/>
+                    </DataTemplate>
+                    <DataTemplate x:Key="PlantTypeLatinName">
+                        <TextBlock Margin="2,0" VerticalAlignment="Center" Text="{Binding PlantTypeLatinName}"/>
+                    </DataTemplate>
+                    <DataTemplate x:Key="PlantName">
+                        <TextBlock Margin="2,0" VerticalAlignment="Center" Text="{Binding PlantName}"/>
+                    </DataTemplate>
+                    <DataTemplate x:Key="PlantTypeCommonName">
+                        <TextBlock Margin="2,0" VerticalAlignment="Center" Text="{Binding PlantTypeCommonName}"/>
+                    </DataTemplate>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Family Name" CellTemplate="{StaticResource PlantFamilyName}" CanUserSort="True" SortMemberPath="PlantFamilyName" />
+                    <DataGridTemplateColumn Header="Type" CellTemplate="{StaticResource PlantTypeLatinName}" CanUserSort="True" SortMemberPath="PlantTypeLatinName" />
+                    <DataGridTemplateColumn Header="Name" CellTemplate="{StaticResource PlantName}" CanUserSort="True" SortMemberPath="PlantName" />
+                    <DataGridTemplateColumn Header="Common Name" CellTemplate="{StaticResource PlantTypeCommonName}" CanUserSort="True" SortMemberPath="PlantTypeCommonName" />
+                    <DataGridTemplateColumn Header="Reference" Width="*" CanUserSort="True" SortMemberPath="UserTask.Reference">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock  Margin="2,0" VerticalAlignment="Center">
+                                    <Hyperlink Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.GoogleCommand}" CommandParameter="{Binding}">
+                                        <TextBlock Text="Google" VerticalAlignment="Center" Margin="2,0"/>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
     </Grid>
 </Window>
