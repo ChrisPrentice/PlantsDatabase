@@ -80,5 +80,26 @@ namespace PlantDatabaseRepositories
                                     });
             }
         }
+
+        public void AddPlantType(string plantTypeLatinName, string plantTypeCommonName, int plantFamilyId)
+        {
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString =
+                    ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                connection.Open();
+
+                connection.Execute(@"INSERT INTO 
+                                        Plants([PlantTypeLatinName], [PlantTypeCommonName], [PlantFamilyId]) 
+                                        VALUES(@PlantTypeLatinName, @PlantTypeCommonName, @PlantFamilyId)
+                                    ",
+                                    new
+                                    {
+                                        PlantTypeLatinName = plantTypeLatinName,
+                                        PlantTypeCommonName = plantTypeCommonName,
+                                        PlantFamilyId = plantFamilyId
+                                    });
+            }
+        }
     }
 }
