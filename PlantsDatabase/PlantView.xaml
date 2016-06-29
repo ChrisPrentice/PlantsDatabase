@@ -1,11 +1,12 @@
-﻿<Window x:Class="PlantsDatabase.MainWindow"
+﻿<Window x:Class="PlantsDatabase.PlantView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantsDatabase"
         xmlns:converters="clr-namespace:PlantsDatabase.Converters"
-        mc:Ignorable="d"
+        mc:Ignorable="d" 
+        DataContext="{StaticResource PlantViewModel}"
         Title="MainWindow" Height="760" Width="1024">
     <Grid>
         <Grid.RowDefinitions>
