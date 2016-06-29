@@ -101,5 +101,38 @@ namespace PlantDatabaseRepositories
                                     });
             }
         }
+
+        public void UpdatePlant(Plant plant)
+        {
+            using (var connection = new SqlConnection())
+            {
+                connection.ConnectionString =
+                    ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+                connection.Open();
+
+                connection.Execute(@"UPDATE PlantTypes
+                                        SET PlantTypeLatinName = @PlantTypeLatinName, PlantTypeCommonName = @PlantTypeCommonName, PlantFamilyId = @PlantFamilyId 
+                                        WHERE PlantTypeId = @PlantTypeId
+                                    ",
+                    new
+                    {
+                        PlantTypeLatinName = plant.PlantTypeLatinName,
+                        PlantTypeCommonName = plant.PlantTypeCommonName,
+                        PlantFamilyId = plant.PlantFamilyId,
+                        PlantTypeId = plant.PlantTypeId
+                    });
+
+                connection.Execute(@"UPDATE Plants
+                                        SET PlantName = @PlantName, PlantTypeId = @PlantTypeId 
+                                        WHERE PlantId = @PlantId
+                                    ",
+                    new
+                    {
+                        PlantName = plant.PlantName,
+                        PlantTypeId = plant.PlantTypeId,
+                        PlantId = plant.PlantId
+                    });
+            }
+        }
     }
 }

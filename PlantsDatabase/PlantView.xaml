@@ -77,10 +77,10 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Latin Name" />
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlantName}" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlantTypeLatinName}" />
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Common Name" />
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlantName}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding PlantTypeCommonName}" />
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Plant Family" />
                 <local:AutoFilteredComboBox Grid.Row="2" Grid.Column="1"
@@ -157,6 +157,8 @@
                                             CanUserSort="True" SortMemberPath="PlantFamilyName" />
                     <DataGridTemplateColumn Header="Type" CellTemplate="{StaticResource PlantTypeLatinName}"
                                             CanUserSort="True" SortMemberPath="PlantTypeLatinName" />
+                    <DataGridTemplateColumn Header="Common Name" CellTemplate="{StaticResource PlantTypeCommonName}"
+                                            CanUserSort="True" SortMemberPath="PlantTypeCommonName" />
                     <DataGridTemplateColumn Header="Name" CanUserSort="True" SortMemberPath="PlantName" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -170,8 +172,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Common Name" CellTemplate="{StaticResource PlantTypeCommonName}"
-                                            CanUserSort="True" SortMemberPath="PlantTypeCommonName" />
                     <DataGridTemplateColumn Header="Edit" CanUserSort="False" Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -17,6 +18,7 @@ namespace PlantsDatabase
         private string _plantTypeLatinName;
         private string _plantTypeCommonName;
         private bool _isNotEditMode = true;
+        private Plant _selectedPlant;
 
         public PlantViewModel()
         {
@@ -38,11 +40,30 @@ namespace PlantsDatabase
 
             EditPlantCommand = new DelegateCommand<Plant>(EditPlant);
             CancelEditCommand = new DelegateCommand(() => IsNotEditMode = true);
+            UpdatePlantCommand = new DelegateCommand(UpdatePlant);
+        }
+
+        private void UpdatePlant()
+        {
+            IsNotEditMode = true;
+
+            _plantRepo.UpdatePlant(new Plant
+            {
+                PlantId = _selectedPlant.PlantId,
+                PlantName = PlantName,
+                PlantTypeId = SelectedPlantTypeId,
+                PlantTypeLatinName = PlantTypeLatinName,
+                PlantTypeCommonName = PlantTypeCommonName,
+                PlantFamilyId = SelectedPlantFamilyId
+            });
+            _plants = new ObservableCollection<Plant>(_plantRepo.GetPlants());
+            OnPropertyChanged("Plants");
         }
 
         private void EditPlant(Plant plant)
         {
             IsNotEditMode = false;
+            _selectedPlant = plant;
 
             PlantName = plant.PlantName;
             PlantTypeLatinName = plant.PlantTypeLatinName;
@@ -56,6 +77,7 @@ namespace PlantsDatabase
         public ICommand GoogleCommand { get; set; }
         public ICommand EditPlantCommand { get; set; }
         public ICommand CancelEditCommand { get; set; }
+        public ICommand UpdatePlantCommand { get; set; }
         public string SiteHeader => "Plants Database";
         public string PlantName { get { return _plantName; } set { SetValue(ref _plantName, value, "PlantName"); } }
         public bool IsNotEditMode { get { return _isNotEditMode; } set { SetValue(ref _isNotEditMode, value, "IsNotEditMode"); } }
