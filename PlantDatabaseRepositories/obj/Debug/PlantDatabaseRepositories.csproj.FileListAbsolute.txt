@@ -1,8 +1,0 @@
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\bin\Debug\PlantDatabaseRepositories.dll
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\bin\Debug\PlantDatabaseRepositories.pdb
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\bin\Debug\Dapper.dll
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\bin\Debug\Dapper.pdb
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\bin\Debug\Dapper.xml
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\obj\Debug\PlantDatabaseRepositories.dll
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\obj\Debug\PlantDatabaseRepositories.pdb
-C:\repos\PlantsDatabase\PlantDatabaseRepositories\obj\Debug\PlantDatabaseRepositories.csprojResolveAssemblyReference.cache
