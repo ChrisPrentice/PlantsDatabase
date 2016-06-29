@@ -4,14 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PlantsDatabase"
+        xmlns:converters="clr-namespace:PlantsDatabase.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="760" Width="1024" d:DataContext="{d:PlantViewModel }">
+        Title="MainWindow" Height="760" Width="1024">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid.Resources>
+            <converters:BoolToVisibilityConverter x:Key="FalseVisible" TrueValue="Collapsed" FalseValue="Visible" />
+
+            <Style TargetType="TextBox">
+                <Setter Property="Height" Value="23" />
+                <Setter Property="Margin" Value="4" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Height" Value="23" />
+                <Setter Property="Margin" Value="4" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Height" Value="23" />
+                <Setter Property="Margin" Value="4" />
+                <Setter Property="Width" Value="100" />
+            </Style>
+            <Style TargetType="local:AutoFilteredComboBox">
+                <Setter Property="Height" Value="23" />
+                <Setter Property="Margin" Value="4" />
+            </Style>
+        </Grid.Resources>
         <Grid Margin="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -31,7 +54,7 @@
                 </Image.RenderTransform>
             </Image>
             <TextBlock Grid.Column="1" Text="{Binding SiteHeader}" VerticalAlignment="Center"
-                       HorizontalAlignment="Center" FontSize="50" />
+                       HorizontalAlignment="Center" FontSize="50" Height="Auto"/>
             <Image Grid.Column="2" />
         </Grid>
         <Grid Grid.Row="1">
@@ -39,25 +62,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style TargetType="TextBox">
-                    <Setter Property="Height" Value="23" />
-                    <Setter Property="Margin" Value="4" />
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="Height" Value="23" />
-                    <Setter Property="Margin" Value="4" />
-                </Style>
-                <Style TargetType="Button">
-                    <Setter Property="Height" Value="23" />
-                    <Setter Property="Margin" Value="4" />
-                    <Setter Property="Width" Value="100" />
-                </Style>
-                <Style TargetType="local:AutoFilteredComboBox">
-                    <Setter Property="Height" Value="23" />
-                    <Setter Property="Margin" Value="4" />
-                </Style>
-            </Grid.Resources>
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -69,7 +74,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
+
                 <TextBlock Text="Latin Name" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PlantName}" />
 
@@ -78,14 +83,14 @@
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Plant Family" />
                 <local:AutoFilteredComboBox Grid.Row="2" Grid.Column="1"
-                                        ItemsSource="{Binding PlantFamilies}"
-                                        SelectedValue="{Binding SelectedPlantFamilyId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        DisplayMemberPath="PlantFamilyName"
-                                        SelectedValuePath="PlantFamilyId" />
-                
+                                            ItemsSource="{Binding PlantFamilies}"
+                                            SelectedValue="{Binding SelectedPlantFamilyId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            DisplayMemberPath="PlantFamilyName"
+                                            SelectedValuePath="PlantFamilyId" />
+
 
                 <Button Grid.Row="3" Grid.Column="1" Command="{Binding AddPlantTypeCommand}" Content="Add Plant Type"
-                    HorizontalAlignment="Right" />
+                        HorizontalAlignment="Right" />
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.ColumnDefinitions>
@@ -103,16 +108,22 @@
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Plant Type" />
                 <local:AutoFilteredComboBox Grid.Row="1" Grid.Column="1"
-                                        ItemsSource="{Binding PlantTypes}"
-                                        SelectedValue="{Binding SelectedPlantTypeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                        DisplayMemberPath="PlantTypeLatinName"
-                                        SelectedValuePath="PlantTypeId" />
-                
+                                            ItemsSource="{Binding PlantTypes}"
+                                            SelectedValue="{Binding SelectedPlantTypeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                            DisplayMemberPath="PlantTypeLatinName"
+                                            SelectedValuePath="PlantTypeId" />
+
                 <Button Grid.Row="2" Grid.Column="1" Command="{Binding AddPlantCommand}" Content="Add Plant"
-                    HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" />
             </Grid>
         </Grid>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Visibility="{Binding IsNotEditMode, Converter={StaticResource FalseVisible}}">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Content="Cancel" Command="{Binding CancelEditCommand}"/>
+                <Button Content="Save" Command="{Binding UpdatePlantCommand}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
             <DataGrid Margin="4"
                       AutoGenerateColumns="False" GridLinesVisibility="None" VerticalScrollBarVisibility="Auto"
                       CanUserSortColumns="True" AlternatingRowBackground="#E8FCFF" Background="#f2f2f2"

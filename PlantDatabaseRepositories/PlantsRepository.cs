@@ -90,7 +90,7 @@ namespace PlantDatabaseRepositories
                 connection.Open();
 
                 connection.Execute(@"INSERT INTO 
-                                        Plants([PlantTypeLatinName], [PlantTypeCommonName], [PlantFamilyId]) 
+                                        PlantTypes([PlantTypeLatinName], [PlantTypeCommonName], [PlantFamilyId]) 
                                         VALUES(@PlantTypeLatinName, @PlantTypeCommonName, @PlantFamilyId)
                                     ",
                                     new

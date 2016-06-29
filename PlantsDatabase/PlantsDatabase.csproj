@@ -61,6 +61,7 @@
     </Compile>
     <Compile Include="AutoFilterCombobox.cs" />
     <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Converters\BoolToVisabilityConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="ImageSearchUriCreator.cs" />
     <Compile Include="MainWindow.xaml.cs">
